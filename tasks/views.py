@@ -12,3 +12,6 @@ def contact(request):
 def viewTask(request):
     return HttpResponse("Hello, This is ViewTask Page")
 
+def show_specific_task(request, task_id):
+    return HttpResponse(f"This is specific task page {task_id}")
+
