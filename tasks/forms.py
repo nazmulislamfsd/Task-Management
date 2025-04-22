@@ -51,11 +51,11 @@ class StyledFormMixin:
 class TaskModelForm(StyledFormMixin, forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title','description','due_date','assigned_to_employee']
+        fields = ['title','description','due_date','assigned_to']
 
         widgets = {
             'due_date': forms.SelectDateWidget,
-            'assigned_to_employee': forms.CheckboxSelectMultiple
+            'assigned_to': forms.CheckboxSelectMultiple
         }
 
 
@@ -70,7 +70,7 @@ class TaskModelForm(StyledFormMixin, forms.ModelForm):
         #     'due_date':forms.SelectDateWidget(attrs={
         #         'class': "border-2 border-gray-300 rounded-md"
         #     }),
-        #     'assigned_to_employee':forms.CheckboxSelectMultiple(attrs={
+        #     'assigned_to':forms.CheckboxSelectMultiple(attrs={
         #         'class': "space-y-2"
         #     })
         # }

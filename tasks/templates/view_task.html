@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is View Task Template</h1>
+    <div>
+        {% for task in tasks %}
+            <h4>{{task}}</h4>
+            <p>{{task.id}}</p>
+            <p>{{task.status}}</p>
+            <p>----------------------------------</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
