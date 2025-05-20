@@ -7,21 +7,16 @@
 </head>
 <body>
     <h1>This is View Task Template</h1>
-    <h1>{{countTask.num_count}}</h1>
     <div>
-        {% for project in projects %}
-            <h4>Project Id: {{project.id}}</h4>
-            <p>{{project.name}}</p>
-            <p>{{project.num_task}}</p>
+        {% for task in tasks %}
+            {% if not task.details.priority == "L" %}
+                <h3>{{task}}</h3>
+                <h3>{{task.details.priority}}</h3>
 
-            {% comment %} <p>{{project.allTask.all}}</p> {% endcomment %}
+                <p>------------------------------------------</p>
+            {% endif %}
             
-            {% comment %} <p>{{task.task.status}}</p> {% endcomment %}
             
-            {% comment %} <p>{{task.status}}</p> {% endcomment %}
-            {% comment %} <p>{{task.task.status}}</p>
-            <p>{{task.priority}}</p> {% endcomment %}
-            <p>----------------------------------</p>
         {% endfor %}
     </div>
 </body>

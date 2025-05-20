@@ -1,5 +1,5 @@
 from django import forms
-from tasks.models import Task
+from tasks.models import Task, Task_detail
 
 # django Form
 
@@ -21,7 +21,7 @@ class TaskForm(forms.Form):
 class StyledFormMixin:
     '''Mixing to apply style to form field'''
 
-    default_classes = "border-2 border-gray-300 rounded-md p-2 w-full h-96"
+    default_classes = "border-2 border-blue-900 rounded-md p-2 w-full"
 
     def apply_style_widgets(self):
         for field_name, field in self.fields.items():
@@ -54,8 +54,8 @@ class TaskModelForm(StyledFormMixin, forms.ModelForm):
         fields = ['title','description','due_date','assigned_to']
 
         widgets = {
-            'due_date': forms.SelectDateWidget,
-            'assigned_to': forms.CheckboxSelectMultiple
+            'due_date': forms.SelectDateWidget(),
+            'assigned_to': forms.CheckboxSelectMultiple()
         }
 
 
@@ -80,3 +80,13 @@ class TaskModelForm(StyledFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.apply_style_widgets()
         
+
+class Task_detailModelform(StyledFormMixin,forms.ModelForm):
+    class Meta:
+        model = Task_detail
+        fields = ['priority', 'notes']
+
+    '''Using Mixing Widget'''
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_style_widgets()

@@ -14,68 +14,36 @@
 					<h3>CREATED AT</h3>
 				</div>
 				{% comment %} Table Items {% endcomment %}
-				<div class="grid grid-cols-4 p-3">
-					<div class="flex">
-						<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-2"></div>
-						<h3>Test Low Task</h3>
+				
+				{% for task in tasks %}
+					<div class="grid grid-cols-4 p-3">
+						<div class="flex">
+							<div class="w-2 h-2 bg-violet-500 rounded-full mt-2 mr-2"></div>
+							<h3>{{task}}</h3>
+							<div>
+								<a href="{% url 'update-task' task.id %}" class="px-2 bg-green-500">Edit</a>
+							</div>
+							<div>
+								<form action="{% url 'delete-task' task.id %}" method="POST">
+									{% csrf_token %}
+									<button type="submit" class="bg-rose-500">Delete</button>
+								</form>
+							</div>
+						</div>
+						<div>
+							<span class="px-3 py-1 text-sm font-semibold bg-blue-100 rounded-full text-blue-800">{{task.details.get_priority_display}}</span>
+						</div>
+						<div class="flex -space-x-2">
+							{% for emp in task.assigned_to.all %}
+							<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">{{emp.name | slice:':2'}}</div>
+							{% endfor %}
+						</div>
+						<div>
+							<h4 class="text-gray-500">{{task.created_at|timesince}}</h4>
+						</div>
 					</div>
-					<div>
-						<span class="px-3 py-1 text-sm font-semibold bg-blue-100 rounded-full text-blue-800">Low</span>
-					</div>
-					<div class="flex -space-x-2">
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">CA</div>
-						
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">JS</div>
-						
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">B</div>
-						
-					</div>
-					<div>
-						<h4 class="text-gray-500">9 months ago</h4>
-					</div>
-				</div>
-				<div class="grid grid-cols-4 p-3">
-					<div class="flex">
-						<div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-2"></div>
-						<h3>Test Task</h3>
-					</div>
-					<div>
-						<span class="px-3 py-1 text-sm font-semibold bg-green-100 rounded-full text-green-800">Normal</span>
-					</div>
-					<div class="flex -space-x-2">
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">CA</div>
-						
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">EV</div>
-						
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">B</div>
-						
-					</div>
-					<div>
-						<h4 class="text-gray-500">9 months ago</h4>
-					</div>
-				</div>
-				<div class="grid grid-cols-4 p-3">
-					<div class="flex">
-						<div class="w-2 h-2 bg-rose-500 rounded-full mt-2 mr-2"></div>
-						<h3>Test Task</h3>
-					</div>
-					<div>
-						<span class="px-3 py-1 text-sm font-semibold bg-rose-100 rounded-full text-rose-800">High</span>
-					</div>
-					<div class="flex -space-x-2">
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">CA</div>
-						
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">JS</div>
-						
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">AJ</div>
-						
-						<div class="w-8 h-8 rounded-full bg-blue-800 text-white flex justify-center items-center border-2 border-white">B</div>
-						
-					</div>
-					<div>
-						<h4 class="text-gray-500">10 months ago</h4>
-					</div>
-				</div>
+				{% endfor %}
+				
 		
 			</section>
 
