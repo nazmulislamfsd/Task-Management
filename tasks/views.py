@@ -5,12 +5,23 @@ from tasks.models import Employee, Task, Task_detail, Project
 from datetime import date
 from django.db.models import Q, Count, Max, Min, Sum, Avg
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 
 # Create your views here.
+# -------------------------
 
-def user_dashboard(request):
-    return render(request, "dashboard/user_dashboard.html")
+def is_manager(user):
+    return user.groups.filter(name='Manager').exists()
 
+def is_employee(user):
+    return user.groups.filter(name='Employee').exists()
+
+# -------------------------
+@user_passes_test(is_employee, login_url='no-permission')
+def employee_dashboard(request):
+    return render(request, "dashboard/employee_dashboard.html")
+
+@user_passes_test(is_manager, login_url='no-permission')
 def manager_dashboard(request):
     
     # getting task count
@@ -53,19 +64,9 @@ def manager_dashboard(request):
 
     return render(request, "dashboard/manager_dashboard.html",context)
 
-def test(request):
-    names = ["mahmud","ahmed","jhon","mahin"]
-    count = 0
-    for name in names:
-        count+=1
-    context = {
-        "names":names,
-        "age":18,
-        "count":count
-    }
-    return render(request, "test.html", context)
 
-
+@login_required
+@permission_required("tasks.add_task", login_url='no-permission')
 def create_task(request):
 
     task_form = TaskModelForm()
@@ -93,6 +94,8 @@ def create_task(request):
 
 
 
+@login_required
+@permission_required("tasks.change_task", login_url='no-permission')
 def update_task(request, id):
 
     task = Task.objects.get(id=id)
@@ -122,6 +125,8 @@ def update_task(request, id):
     return render(request, "taskForm.html",context)
 
 
+@login_required
+@permission_required("tasks.delete_task", login_url='no-permission')
 def delete_task(request, id):
     if request.method == 'POST':
         task = Task.objects.get(id=id)
@@ -132,6 +137,8 @@ def delete_task(request, id):
         messages.error(request, 'Something went wrong')
         return redirect('manager-dashboard')
 
+@login_required
+@permission_required("tasks.view_task", login_url='no-permission')
 def view_task(request):
     # tasks = Task.objects.all()
     # tasks = Task.objects.filter(status="PENDING")

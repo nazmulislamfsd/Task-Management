@@ -7,10 +7,12 @@
 </head>
 <body>
     <h1>Welcome To LogIn</h1>
+    {% for message in messages %}
+		<p>{{message}}</p>
+	{% endfor %}
     <form action="{% url 'sign-in' %}" method="POST">
         {% csrf_token %}
-        <input type="text" placeholder="type username" name="username">
-        <input type="password" placeholder="type password" name="password">
+        {{form.as_p}}
         <button type="submit">Sign In</button>
     </form>
 </body>
